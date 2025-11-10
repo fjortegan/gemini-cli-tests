@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subida de Datos</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 500px;
+        }
+        h1 {
+            color: #005a9c;
+            margin-bottom: 30px;
+        }
+        .file-upload-wrapper {
+            margin-bottom: 20px;
+            border: 2px dashed #005a9c;
+            border-radius: 5px;
+            padding: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+        .file-upload-wrapper:hover {
+            background-color: #f0f8ff;
+        }
+        .file-upload-wrapper input[type="file"] {
+            opacity: 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        .file-upload-label {
+            font-size: 16px;
+            color: #005a9c;
+        }
+        .file-name {
+            font-size: 14px;
+            color: #555;
+            margin-top: 10px;
+        }
+        .submit-btn {
+            background-color: #005a9c;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-btn:hover {
+            background-color: #003d6b;
+        }
+        .input-wrapper {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .input-label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            color: #333;
+        }
+        .input-wrapper input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        .input-wrapper input[type="text"]:focus {
+            border-color: #005a9c;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 90, 156, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Importación datos consumo eléctrico</h1>
+        <h1>Subida de Archivos CSV</h1>
+            <div class="input-wrapper">
+                <label for="studentName" class="input-label">Nombre del Alumno:</label>
+                <input type="text" id="studentName" name="studentName" placeholder="Introduce el nombre del alumno">
+            </div>
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="file-upload-wrapper" id="file-upload-wrapper-1">
+                <input type="file" id="file1" name="file1" accept=".csv" onchange="updateFileName('file1', 'file-name-1')">
+                <label for="file1" class="file-upload-label">Seleccionar primer archivo CSV</label>
+                <div class="file-name" id="file-name-1"></div>
+            </div>
+            <div class="file-upload-wrapper" id="file-upload-wrapper-2">
+                <input type="file" id="file2" name="file2" accept=".csv" onchange="updateFileName('file2', 'file-name-2')">
+                <label for="file2" class="file-upload-label">Seleccionar segundo archivo CSV</label>
+                <div class="file-name" id="file-name-2"></div>
+            </div>
+            <button type="submit" class="submit-btn">Subir Archivos</button>
+        </form>
+    </div>
+
+    <script>
+        function updateFileName(inputId, fileNameId) {
+            const input = document.getElementById(inputId);
+            const fileNameContainer = document.getElementById(fileNameId);
+            if (input.files.length > 0) {
+                fileNameContainer.textContent = `Archivo seleccionado: ${input.files[0].name}`;
+            } else {
+                fileNameContainer.textContent = '';
+            }
+        }
+    </script>
+</body>
+</html>
