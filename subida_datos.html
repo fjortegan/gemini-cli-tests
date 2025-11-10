@@ -22,7 +22,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             text-align: center;
             width: 100%;
-            max-width: 500px;
+            max-width: 700px;
         }
         h1 {
             color: #005a9c;
@@ -97,7 +97,7 @@
 <body>
     <div class="container">
         <h1>Importación datos consumo eléctrico</h1>
-        <h1>Subida de Archivos CSV</h1>
+        <h1>Subida de archivos en formato CSV</h1>
             <div class="input-wrapper">
                 <label for="studentName" class="input-label">Nombre del Alumno:</label>
                 <input type="text" id="studentName" name="studentName" placeholder="Introduce el nombre del alumno">
@@ -105,12 +105,12 @@
         <form action="/upload" method="post" enctype="multipart/form-data">
             <div class="file-upload-wrapper" id="file-upload-wrapper-1">
                 <input type="file" id="file1" name="file1" accept=".csv" onchange="updateFileName('file1', 'file-name-1')">
-                <label for="file1" class="file-upload-label">Seleccionar primer archivo CSV</label>
+                <label for="file1" class="file-upload-label">Seleccionar archivo con datos de clientes</label>
                 <div class="file-name" id="file-name-1"></div>
             </div>
             <div class="file-upload-wrapper" id="file-upload-wrapper-2">
                 <input type="file" id="file2" name="file2" accept=".csv" onchange="updateFileName('file2', 'file-name-2')">
-                <label for="file2" class="file-upload-label">Seleccionar segundo archivo CSV</label>
+                <label for="file2" class="file-upload-label">Seleccionar archivo con datos de consumo</label>
                 <div class="file-name" id="file-name-2"></div>
             </div>
             <button type="submit" class="submit-btn">Subir Archivos</button>
