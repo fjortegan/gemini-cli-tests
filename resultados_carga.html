@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados Estadísticos - Carga de Datos</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 900px;
+        }
+        h1 {
+            color: #005a9c;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        h2 {
+            color: #005a9c;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #005a9c;
+        }
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 5px;
+        }
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #005a9c;
+        }
+        .progress-bar {
+            background-color: #e9ecef;
+            border-radius: 5px;
+            height: 20px;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+        .progress-fill {
+            background-color: #005a9c;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+        .section {
+            margin-bottom: 30px;
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .alert-success {
+            background-color: #d1edff;
+            border: 1px solid #005a9c;
+            color: #005a9c;
+        }
+        .alert-warning {
+            background-color: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+        }
+        .back-btn {
+            background-color: #005a9c;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+        .back-btn:hover {
+            background-color: #003d6b;
+        }
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+        .table th,
+        .table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .table th {
+            background-color: #f8f9fa;
+            font-weight: bold;
+            color: #005a9c;
+        }
+        .error-list {
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .error-item {
+            color: #dc3545;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Resultados Estadísticos - Carga de Datos</h1>
+
+        <div class="section">
+            <div class="alert alert-success">
+                <strong>✓ Carga completada exitosamente</strong>
+                <p>Los archivos CSV se han procesado correctamente con el nombre del alumno: <strong id="student-name">{{ alumno }}</strong></p>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Resumen General</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Total Registros Procesados</div>
+                    <div class="stat-value">15,847</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Registros Válidos</div>
+                    <div class="stat-value">15,623</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Registros con Errores</div>
+                    <div class="stat-value">224</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Porcentaje de Éxito</div>
+                    <div class="stat-value">98.6%</div>
+                </div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" style="width: 98.6%"></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Detalles por Archivo</h2>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Archivo</th>
+                        <th>Registros</th>
+                        <th>Válidos</th>
+                        <th>Errores</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{{ clientes }}</td>
+                        <td>8,432</td>
+                        <td>8,356</td>
+                        <td>76</td>
+                        <td>✓ Procesado</td>
+                    </tr>
+                    <tr>
+                        <td>{{ consumos }}</td>
+                        <td>7,415</td>
+                        <td>7,267</td>
+                        <td>148</td>
+                        <td>✓ Procesado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>Tipos de Errores Detectados</h2>
+            <div class="error-list">
+                <div class="error-item">• Formato de fecha inválido (142 casos)</div>
+                <div class="error-item">• Campos obligatorios vacíos (52 casos)</div>
+                <div class="error-item">• Valores numéricos fuera de rango (30 casos)</div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Estadísticas de Consumo</h2>
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Consumo Promedio Mensual</div>
+                    <div class="stat-value">345.2 kWh</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Consumo Máximo</div>
+                    <div class="stat-value">1,247.8 kWh</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Consumo Mínimo</div>
+                    <div class="stat-value">45.3 kWh</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-label">Desviación Estándar</div>
+                    <div class="stat-value">±156.7 kWh</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" style="text-align: center; margin-top: 40px;">
+            <a href="/" class="back-btn">← Volver al Inicio</a>
+        </div>
+    </div>
+
+    <script>
+        // Simular datos dinámicos (en producción vendrían del backend)
+        document.addEventListener('DOMContentLoaded', function() {
+            // Aquí podrías agregar lógica para obtener los datos reales
+            console.log('Página de resultados cargada');
+        });
+    </script>
+</body>
+</html>

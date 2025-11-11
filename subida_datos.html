@@ -92,25 +92,60 @@
             outline: none;
             box-shadow: 0 0 0 2px rgba(0, 90, 156, 0.2);
         }
+        .error-box {
+            background-color: #ffeaea;
+            border: 1px solid #f5c2c7;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+            display: none;
+        }
+        .error-title {
+            color: #dc3545;
+            font-weight: bold;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        .error-message {
+            color: #842029;
+            font-size: 14px;
+        }
+        .error-icon {
+            color: #dc3545;
+            margin-right: 8px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Importación datos consumo eléctrico</h1>
-        <h1>Subida de archivos en formato CSV</h1>
-            <div class="input-wrapper">
-                <label for="studentName" class="input-label">Nombre del Alumno:</label>
-                <input type="text" id="studentName" name="studentName" placeholder="Introduce el nombre del alumno">
+        <h1>Subida de Archivos CSV</h1>
+        
+        <!-- Recuadro de error con fondo rojo suave -->
+        <div class="error-box" id="error-box">
+            <div class="error-title">
+                <span class="error-icon">⚠️</span>Error en la carga de archivos
             </div>
-        <form action="/upload" method="post" enctype="multipart/form-data">
+            <div class="error-message" id="error-message">
+                Ha ocurrido un error al procesar los archivos. Por favor, asegúrate de que los archivos estén en formato CSV válido y reintenta nuevamente.
+            </div>
+        </div>
+        
+        <form action="subidabigdata/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="input-wrapper">
+                <label for="alumno" class="input-label">Nombre del Alumno:</label>
+                <input type="text" id="alumno" name="alumno" placeholder="Introduce el nombre del alumno">
+            </div>
             <div class="file-upload-wrapper" id="file-upload-wrapper-1">
-                <input type="file" id="file1" name="file1" accept=".csv" onchange="updateFileName('file1', 'file-name-1')">
-                <label for="file1" class="file-upload-label">Seleccionar archivo con datos de clientes</label>
+                <input type="file" id="clientes" name="clientes" accept=".csv" onchange="updateFileName('clientes', 'file-name-1')"/>
+                <label for="clientes" class="file-upload-label">Seleccionar archivo con datos de clientes</label>
                 <div class="file-name" id="file-name-1"></div>
             </div>
             <div class="file-upload-wrapper" id="file-upload-wrapper-2">
-                <input type="file" id="file2" name="file2" accept=".csv" onchange="updateFileName('file2', 'file-name-2')">
-                <label for="file2" class="file-upload-label">Seleccionar archivo con datos de consumo</label>
+                <input type="file" id="consumos" name="consumos" accept=".csv" onchange="updateFileName('consumos', 'file-name-2')"/>
+                <label for="consumos" class="file-upload-label">Seleccionar archivo con datos de consumo</label>
                 <div class="file-name" id="file-name-2"></div>
             </div>
             <button type="submit" class="submit-btn">Subir Archivos</button>
@@ -127,6 +162,26 @@
                 fileNameContainer.textContent = '';
             }
         }
+        
+        // Función para mostrar el recuadro de error
+        function showError(message) {
+            const errorBox = document.getElementById('error-box');
+            const errorMessage = document.getElementById('error-message');
+            errorMessage.textContent = message;
+            errorBox.style.display = 'block';
+            // Hacer scroll hacia arriba para que el usuario vea el error
+            errorBox.scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Función para ocultar el recuadro de error
+        function hideError() {
+            const errorBox = document.getElementById('error-box');
+            errorBox.style.display = 'none';
+        }
+        
+        // Ejemplo de uso (puedes activar cuando sea necesario)
+        // showError('El archivo cliente.csv debe contener al menos 100 registros para ser válido');
+        // Para ocultar: hideError();
     </script>
 </body>
 </html>
