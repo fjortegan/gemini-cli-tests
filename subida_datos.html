@@ -92,6 +92,20 @@
             outline: none;
             box-shadow: 0 0 0 2px rgba(0, 90, 156, 0.2);
         }
+        .input-wrapper select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+            background-color: white;
+            cursor: pointer;
+        }
+        .input-wrapper select:focus {
+            border-color: #005a9c;
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(0, 90, 156, 0.2);
+        }
         .error-box {
             background-color: #ffeaea;
             border: 1px solid #f5c2c7;
@@ -136,7 +150,9 @@
             {% csrf_token %}
             <div class="input-wrapper">
                 <label for="alumno" class="input-label">Nombre del Alumno:</label>
-                <input type="text" id="alumno" name="alumno" placeholder="Introduce el nombre del alumno">
+                <select id="alumno" name="alumno">
+                    <option value="Alumno prueba">Alumno prueba</option>
+                </select>
             </div>
             <div class="file-upload-wrapper" id="file-upload-wrapper-1">
                 <input type="file" id="clientes" name="clientes" accept=".csv" onchange="updateFileName('clientes', 'file-name-1')"/>
