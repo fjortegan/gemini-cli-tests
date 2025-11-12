@@ -4,7 +4,7 @@ from pymongo import MongoClient
 import argparse
 import os
 
-def import_csv_to_mongo(csv_file_path, db_name, collection_name, mongo_uri="mongodb://localhost:27017/"):
+def import_csv_to_mongo(csv_file_path, db_name, collection_name, mongo_uri="mongodb://server25.fjortega.es:27017/"):
     """
     Importa datos desde un archivo CSV a una colección de MongoDB.
 
@@ -59,7 +59,7 @@ if __name__ == "__main__":
     parser.add_argument("csv_file", help="Ruta al archivo CSV a importar.")
     parser.add_argument("db_name", help="Nombre de la base de datos de destino en MongoDB.")
     parser.add_argument("collection_name", help="Nombre de la colección de destino en MongoDB.")
-    parser.add_argument("--uri", default="mongodb://localhost:27017/", help="URI de conexión de MongoDB (por defecto: mongodb://localhost:27017/).")
+    parser.add_argument("--uri", default="mongodb://server25.fjortega.es:27017/", help="URI de conexión de MongoDB (por defecto: mongodb://server25.fjortega.es:27017/).")
 
     args = parser.parse_args()
 

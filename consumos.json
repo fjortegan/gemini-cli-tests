@@ -1,0 +1,10 @@
+{
+  "_id": ObjectId("6316fc1597eb703de2add36e"),
+  "propietario_id": ObjectId("6317048697eb703de2add36f"),
+  "date": ISODate("2022-10-26T13:01:00.000Z"),
+  "kW hora": {
+    "consumo": 11,
+    "generado": 6,
+    "necesidad-red": 5
+  }
+}

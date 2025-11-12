@@ -1,0 +1,11 @@
+_id,nombre,direccion_calle,direccion_numero,direccion_ciudad,direccion_barrio,direccion_provincia,direccion_cp
+6317048697eb703de2add36f,Aitor Medrano,Secreta,123,Elche,Carrús,Alicante,03206
+6317048697eb703de2add370,María García,Mayor,45,Valencia,Ciutat Vella,Valencia,46001
+6317048697eb703de2add371,Carlos López,Avenida Constitución,78,Madrid,Centro,Madrid,28014
+6317048697eb703de2add372,Laura Fernández,Carretas,12,Barcelona,Gòtic,Barcelona,08002
+6317048697eb703de2add373,Pedro Sánchez,Gran Vía,234,Bilbao,Centro,Bizkaia,48001
+6317048697eb703de2add374,Ana Martínez,Paseo de la Castellana,89,Sevilla,Santa Cruz,Sevilla,41001
+6317048697eb703de2add375,Pablo Ruiz,San Vicente,67,Málaga,Centro,Málaga,29001
+6317048697eb703de2add376,Carmen Hernández,Avenida de la Libertad,156,Zaragoza,Centro,Zaragoza,50001
+6317048697eb703de2add377,Juan Pérez,Reyes Católicos,23,Granada,Centro,Granada,18001
+6317048697eb703de2add378,Rosa González,Avenida del Mediterráneo,445,Alacant,Santa Pola,Alicante,03012

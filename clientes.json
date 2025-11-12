@@ -1,0 +1,12 @@
+{
+  "_id": ObjectId("6317048697eb703de2add36f"),
+  "nombre": "Aitor Medrano",
+  "direccion": {
+    "calle": "Secreta",
+    "numero": "123",
+    "ciudad": "Elche",
+    "barrio": "Carrús",
+    "provincia": "Alicante",
+    "cp": "03206"
+	  }
+}
