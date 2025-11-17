@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Subida de Archivos CSV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+        input[type="file"] {
+            margin-top: 20px;
+            padding: 10px;
+            width: 100%;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            cursor: pointer;
+        }
+        .file-list {
+            margin-top: 30px;
+        }
+        .file-list div {
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .file-list span {
+            font-size: 14px;
+            color: #555;
+        }
+        .file-list button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .file-list button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Subida de Archivos CSV</h2>
+        <input type="file" id="fileInput" multiple accept=".csv">
+        <div class="file-list" id="fileList">
+            <!-- Archivos subidos aparecerán aquí -->
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+        const dropZone = document.querySelector('.container');
+
+        // Función para leer el contenido del archivo CSV
+        function readCSVFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const text = e.target.result;
+                    const lines = text.trim().split('\n');
+                    const headers = lines[0].split(',');
+                    const data = lines.slice(1).map(line => {
+                        const values = line.split(',');
+                        const obj = {};
+                        headers.forEach((header, index) => {
+                            obj[header.trim()] = values[index].trim();
+                        });
+                        return obj;
+                    });
+                    resolve(data);
+                };
+                reader.onerror = function() {
+                    reject('Error al leer el archivo');
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        // Función para mostrar los archivos subidos
+        function displayFiles(files) {
+            fileList.innerHTML = '';
+            files.forEach(file => {
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'file-list-item';
+                fileDiv.innerHTML = `
+                    <span>${file.name}</span>
+                    <button onclick="previewFile('${file.name}')">Ver Previsualización</button>
+                `;
+                fileList.appendChild(fileDiv);
+            });
+        }
+
+        // Función para previsualizar el contenido de un archivo CSV
+        async function previewFile(filename) {
+            const files = Array.from(fileInput.files);
+            const file = files.find(f => f.name === filename);
+            if (!file) return;
+
+            try {
+                const data = await readCSVFile(file);
+                alert(`Archivo: ${filename}\n\n${JSON.stringify(data, null, 2)}`);
+            } catch (error) {
+                alert('Error al previsualizar el archivo: ' + error);
+            }
+        }
+
+        // Manejar el evento de selección de archivos
+        fileInput.addEventListener('change', function(event) {
+            const files = event.target.files;
+            displayFiles(files);
+        });
+
+        // Manejar el arrastre y soltar de archivos
+        dropZone.addEventListener('dragover', function(e) {
+            e.preventDefault();
+            dropZone.style.borderColor = '#28a745';
+        });
+
+        dropZone.addEventListener('dragleave', function(e) {
+            e.preventDefault();
+            dropZone.style.borderColor = '#ccc';
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            e.preventDefault();
+            dropZone.style.borderColor = '#ccc';
+            const files = e.dataTransfer.files;
+            fileInput.files = files;
+            displayFiles(files);
+        });
+    </script>
+</body>
+</html>

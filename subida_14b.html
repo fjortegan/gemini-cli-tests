@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Subida de Archivos CSV</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #e0f7fa, #b2ebf2);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .file-input {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .file-input input[type="file"] {
+            padding: 15px 25px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .file-input input[type="file"]:hover {
+            background-color: #0056b3;
+        }
+        .file-list {
+            margin-top: 30px;
+        }
+        .file-item {
+            background-color: #f9f9f9;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 5px solid #007bff;
+        }
+        .file-item span {
+            font-size: 16px;
+            color: #555;
+        }
+        .file-item button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .file-item button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Subida de Archivos CSV</h2>
+        <div class="file-input">
+            <input type="file" id="fileInput" multiple accept=".csv">
+        </div>
+        <div class="file-list" id="fileList">
+            <!-- Archivos subidos aparecerán aquí -->
+        </div>
+    </div>
+
+    <script>
+        const fileInput = document.getElementById('fileInput');
+        const fileList = document.getElementById('fileList');
+
+        // Función para leer el contenido del archivo CSV
+        function readCSVFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const text = e.target.result;
+                    const lines = text.trim().split('\n');
+                    const headers = lines[0].split(',');
+                    const data = lines.slice(1).map(line => {
+                        const values = line.split(',');
+                        const obj = {};
+                        headers.forEach((header, index) => {
+                            obj[header.trim()] = values[index].trim();
+                        });
+                        return obj;
+                    });
+                    resolve(data);
+                };
+                reader.onerror = function() {
+                    reject('Error al leer el archivo');
+                };
+                reader.readAsText(file);
+            });
+        }
+
+        // Función para mostrar los archivos subidos
+        function displayFiles(files) {
+            fileList.innerHTML = '';
+            files.forEach(file => {
+                const fileDiv = document.createElement('div');
+                fileDiv.className = 'file-item';
+                fileDiv.innerHTML = `
+                    <span>${file.name}</span>
+                    <button onclick="previewFile('${file.name}')">Ver Previsualización</button>
+                `;
+                fileList.appendChild(fileDiv);
+            });
+        }
+
+        // Función para previsualizar el contenido de un archivo CSV
+        async function previewFile(filename) {
+            const files = Array.from(fileInput.files);
+            const file = files.find(f => f.name === filename);
+            if (!file) return;
+
+            try {
+                const data = await readCSVFile(file);
+                alert(`Archivo: ${filename}\n\n${JSON.stringify(data, null, 2)}`);
+            } catch (error) {
+                alert('Error al previsualizar el archivo: ' + error);
+            }
+        }
+
+        // Manejar el evento de selección de archivos
+        fileInput.addEventListener('change', function(event) {
+            const files = event.target.files;
+            displayFiles(files);
+        });
+    </script>
+</body>
+</html>

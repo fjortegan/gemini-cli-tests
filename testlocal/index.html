@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elegant CSV Uploader</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>CSV File Uploader</h1>
+            <p>Upload two CSV files with our elegant interface</p>
+        </header>
+        
+        <main>
+            <div class="upload-section">
+                <div class="file-upload" id="upload1">
+                    <div class="upload-area">
+                        <div class="upload-icon">📁</div>
+                        <h3>Upload First CSV File</h3>
+                        <p>Drag & drop your file here or click to browse</p>
+                        <input type="file" id="file1" class="file-input" accept=".csv">
+                        <button class="browse-btn" onclick="document.getElementById('file1').click()">Browse Files</button>
+                        <div class="file-info" id="file1-info"></div>
+                    </div>
+                </div>
+                
+                <div class="file-upload" id="upload2">
+                    <div class="upload-area">
+                        <div class="upload-icon">📁</div>
+                        <h3>Upload Second CSV File</h3>
+                        <p>Drag & drop your file here or click to browse</p>
+                        <input type="file" id="file2" class="file-input" accept=".csv">
+                        <button class="browse-btn" onclick="document.getElementById('file2').click()">Browse Files</button>
+                        <div class="file-info" id="file2-info"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="action-section">
+                <button class="upload-btn" id="upload-btn" onclick="uploadFiles()">Upload Files</button>
+            </div>
+        </main>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>

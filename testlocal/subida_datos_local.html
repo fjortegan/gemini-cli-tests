@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subida de Datos Local</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 600px;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 1.1em;
+        }
+        
+        .upload-section {
+            margin: 25px 0;
+            padding: 20px;
+            border: 2px dashed #3498db;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            background-color: #f8f9fa;
+        }
+        
+        .upload-section:hover {
+            background-color: #e3f2fd;
+            border-color: #2980b9;
+        }
+        
+        .upload-section h2 {
+            color: #3498db;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            margin: 15px 0;
+        }
+        
+        .file-input-wrapper input[type=file] {
+            position: absolute;
+            left: 0;
+            top: 0;
+            opacity: 0;
+            width: 100%;
+            height: 100%;
+            cursor: pointer;
+        }
+        
+        .btn {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(52, 152, 219, 0.3);
+        }
+        
+        .btn:hover {
+            background-color: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(52, 152, 219, 0.4);
+        }
+        
+        .file-info {
+            margin-top: 15px;
+            color: #2c3e50;
+            font-size: 0.9em;
+        }
+        
+        .file-name {
+            font-weight: 600;
+            color: #3498db;
+        }
+        
+        .submit-btn {
+            background-color: #27ae60;
+            padding: 15px 40px;
+            font-size: 18px;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(39, 174, 96, 0.3);
+        }
+        
+        .submit-btn:hover {
+            background-color: #219653;
+            box-shadow: 0 6px 20px rgba(39, 174, 96, 0.4);
+        }
+        
+        .success-message {
+            color: #27ae60;
+            font-weight: 600;
+            margin-top: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .success-message.show {
+            opacity: 1;
+        }
+        
+        .file-preview {
+            margin-top: 15px;
+            text-align: left;
+            background-color: #f1f8e9;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+        }
+        
+        .preview-title {
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+        
+        .preview-content {
+            font-size: 0.85em;
+            color: #7f8c8d;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Subida de Datos Local</h1>
+        <p class="subtitle">Seleccione y cargue sus archivos CSV</p>
+        
+        <div class="upload-section">
+            <h2>Archivo CSV 1</h2>
+            <div class="file-input-wrapper">
+                <button class="btn">Seleccionar Archivo</button>
+                <input type="file" id="file1" accept=".csv" class="file-input">
+            </div>
+            <div class="file-info" id="file1-info">Ningún archivo seleccionado</div>
+            <div class="file-preview" id="file1-preview">
+                <div class="preview-title">Vista previa:</div>
+                <div class="preview-content" id="preview1-content"></div>
+            </div>
+        </div>
+        
+        <div class="upload-section">
+            <h2>Archivo CSV 2</h2>
+            <div class="file-input-wrapper">
+                <button class="btn">Seleccionar Archivo</button>
+                <input type="file" id="file2" accept=".csv" class="file-input">
+            </div>
+            <div class="file-info" id="file2-info">Ningún archivo seleccionado</div>
+            <div class="file-preview" id="file2-preview">
+                <div class="preview-title">Vista previa:</div>
+                <div class="preview-content" id="preview2-content"></div>
+            </div>
+        </div>
+        
+        <button class="btn submit-btn" id="submit-btn">Cargar Archivos</button>
+        <div class="success-message" id="success-message">¡Archivos cargados exitosamente!</div>
+    </div>
+
+    <script>
+        // Funcionalidad para ambos archivos
+        function setupFileUpload(fileInputId, fileInfoId, previewId, previewContentId) {
+            const fileInput = document.getElementById(fileInputId);
+            const fileInfo = document.getElementById(fileInfoId);
+            const filePreview = document.getElementById(previewId);
+            const previewContent = document.getElementById(previewContentId);
+            
+            fileInput.addEventListener('change', function(e) {
+                if (this.files && this.files[0]) {
+                    const file = this.files[0];
+                    
+                    // Verificar que sea un archivo CSV
+                    if (file.type !== 'text/csv' && !file.name.endsWith('.csv')) {
+                        alert('Por favor, seleccione solo archivos CSV.');
+                        this.value = '';
+                        fileInfo.textContent = 'Ningún archivo seleccionado';
+                        filePreview.style.display = 'none';
+                        return;
+                    }
+                    
+                    // Mostrar información del archivo
+                    fileInfo.innerHTML = `Archivo seleccionado: <span class="file-name">${file.name}</span> (${(file.size/1024).toFixed(2)} KB)`;
+                    
+                    // Mostrar vista previa del contenido
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const content = e.target.result;
+                        const lines = content.split('\n');
+                        const previewLines = lines.slice(0, 5);
+                        previewContent.innerHTML = previewLines.join('<br>');
+                        filePreview.style.display = 'block';
+                    };
+                    reader.readAsText(file);
+                } else {
+                    fileInfo.textContent = 'Ningún archivo seleccionado';
+                    filePreview.style.display = 'none';
+                }
+            });
+        }
+        
+        // Configurar ambos uploads
+        setupFileUpload('file1', 'file1-info', 'file1-preview', 'preview1-content');
+        setupFileUpload('file2', 'file2-info', 'file2-preview', 'preview2-content');
+        
+        // Funcionalidad del botón de envío
+        document.getElementById('submit-btn').addEventListener('click', function() {
+            const file1 = document.getElementById('file1').files[0];
+            const file2 = document.getElementById('file2').files[0];
+            
+            if (!file1 || !file2) {
+                alert('Por favor, seleccione ambos archivos CSV antes de cargar.');
+                return;
+            }
+            
+            // Simular proceso de carga
+            this.textContent = 'Cargando...';
+            this.disabled = true;
+            
+            setTimeout(() => {
+                document.getElementById('success-message').classList.add('show');
+                this.textContent = 'Cargar Archivos';
+                this.disabled = false;
+                
+                // Opcional: Reiniciar formularios después de 3 segundos
+                setTimeout(() => {
+                    document.getElementById('success-message').classList.remove('show');
+                    document.getElementById('file1').value = '';
+                    document.getElementById('file2').value = '';
+                    document.getElementById('file1-info').textContent = 'Ningún archivo seleccionado';
+                    document.getElementById('file2-info').textContent = 'Ningún archivo seleccionado';
+                    document.getElementById('file1-preview').style.display = 'none';
+                    document.getElementById('file2-preview').style.display = 'none';
+                }, 3000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>

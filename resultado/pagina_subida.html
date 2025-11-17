@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Carga de Archivos CSV</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        input[type="file"] {
+            margin-top: 10px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Carga de Archivos CSV</h1>
+    <form id="uploadForm">
+        <label for="file1">Subir Archivo CSV 1:</label>
+        <input type="file" id="file1" name="file1" accept=".csv">
+        
+        <label for="file2">Subir Archivo CSV 2:</label>
+        <input type="file" id="file2" name="file2" accept=".csv">
+        
+        <button type="submit">Subir Archivos</button>
+    </form>
+
+    <script>
+        document.getElementById('uploadForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            
+            const file1 = document.getElementById('file1').files[0];
+            const file2 = document.getElementById('file2').files[0];
+            
+            if (!file1 || !file2) {
+                alert('Por favor, seleccione ambos archivos CSV.');
+                return;
+            }
+            
+            // Aquí puedes agregar la lógica para procesar y guardar los archivos en la carpeta 'resultado'
+            // Por ejemplo, usando Fetch API para enviar los archivos a un servidor o manipularlos con JavaScript
+
+            alert('Archivos seleccionados. Puedes procesarlos según tus necesidades.');
+        });
+    </script>
+</body>
+</html>
